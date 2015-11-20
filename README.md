@@ -1,5 +1,5 @@
 # tester
-Test suite tool for finding and running categorized test cases
+Test suite tool for finding and running test cases
 
 
 
