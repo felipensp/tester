@@ -1,0 +1,6 @@
+#ifndef TESTER_COMMON_HH
+#define TESTER_COMMON_HH
+
+#define TESTER_VERSION "0.1"
+
+#endif // TESTER_COMMON_HH
