@@ -4,8 +4,6 @@
 #include "testfinder.hh"
 #include "testexecutor.hh"
 
-using namespace tester;
-
 void usage()
 {
 	std::cout << "tester " << TESTER_VERSION << std::endl;
@@ -13,6 +11,8 @@ void usage()
 
 int main(int argc, char **argv)
 {
+	using namespace tester;
+
 	TestFinder finder;
 
 	finder.setTestExtension(".phpt");
@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 
 	std::cout << "Tests found: " << finder.testsFound() << std::endl;
 
-	if (finder.hasFiles()) {
+	if (finder.hasTests()) {
 		TestExecutor executor(finder);
 		executor.run();
 	}

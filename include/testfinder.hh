@@ -9,7 +9,7 @@ namespace tester {
 class TestFinder {
 public:
 
-	TestFinder() : m_path("*"), m_files() {}
+	TestFinder() : m_path("*"), m_files(), m_ext(".test") {}
 
 	~TestFinder() {}
 
@@ -20,7 +20,9 @@ public:
 	void searchTests(std::string& path);
 	void searchTests() { searchTests(m_path); }
 
-	bool hasFiles() const { return !m_files.empty(); }
+	bool hasTests() const { return !m_files.empty(); }
+
+	std::vector<std::string>& getTests() { return m_files; }
 
 	int testsFound() const { return m_files.size(); }
 
