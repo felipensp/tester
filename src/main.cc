@@ -27,6 +27,9 @@ int main(int argc, char **argv)
 
 	if (finder.hasTests()) {
 		TestExecutor executor(finder);
+
+		executor.setProgram("php");
+
 		executor.run();
 	}
 
