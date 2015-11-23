@@ -23,6 +23,7 @@ public:
 	const std::string& getFile() const { return m_file; }
 
 	void dumpTest();
+
 private:
 	void readFile();
 	void parseFile();

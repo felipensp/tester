@@ -8,7 +8,7 @@ OBJS=$(BLD)/*.o
 
 INSTALLBIN=/usr/bin
 
-liblex:
+tester:
 	mkdir -p $(BLD)
 	$(CXX) -fPIC -g -ggdb -c -Wall -std=c++11 -I$(INC)/ -o$(BLD)/testfinder.o $(SRC)/testfinder.cc
 	$(CXX) -fPIC -g -ggdb -c -Wall -std=c++11 -I$(INC)/ -o$(BLD)/testexecutor.o $(SRC)/testexecutor.cc
