@@ -12,6 +12,8 @@ class TestParser;
 
 class TestExecutor {
 public:
+	enum TestFile { TESTCASE, EXPECTED, OUTPUT };
+
 	TestExecutor(TestFinder& finder) : m_finder(finder) {}
 
 	void run();
@@ -22,6 +24,8 @@ public:
 
 	void setProgram(const char *program) { m_program = program; }
 
+	void createFile(TestFile, const std::string&, const std::string&);
+
 private:
 	TestFinder& m_finder;
 
@@ -31,6 +35,10 @@ private:
 
 	std::vector<std::string> m_passes;
 	std::vector<std::string> m_fails;
+
+	std::string m_test_file;
+	std::string m_out_file;
+	std::string m_exp_file;
 };
 
 } // tester

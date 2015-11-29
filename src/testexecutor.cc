@@ -10,14 +10,28 @@
 
 namespace tester {
 
+void TestExecutor::createFile(TestFile type, const std::string& filename, const std::string& buffer)
+{
+	std::ofstream test_file;
+
+	test_file.open(filename);
+	test_file << buffer;
+
+	switch (type) {
+		case TESTCASE: m_test_file = filename; break;
+		case OUTPUT: m_out_file = filename; break;
+		case EXPECTED: m_exp_file = filename; break;
+	}
+
+	test_file.close();
+}
+
 void TestExecutor::executeTest(TestParser& parser)
 {
 	const std::string filename = "/tmp/1.php";
 
-	std::ofstream test_file;
-	test_file.open(filename);
-	test_file << parser.getBody();
-	test_file.close();
+	/* Create test case file */
+	createFile(TESTCASE, filename, parser.getBody());
 
 	const char *cmd = (m_program + " " + filename + " 2>&1").c_str();
 
@@ -32,6 +46,12 @@ void TestExecutor::executeTest(TestParser& parser)
             m_output << buffer;
 		}
     }
+
+	/* Expected output file */
+	createFile(EXPECTED, filename + ".exp", parser.getExpect());
+
+	/* Test case output file */
+    createFile(OUTPUT, filename + ".out", m_output.str());
 }
 
 void TestExecutor::runTest(const std::string& file)
@@ -39,15 +59,19 @@ void TestExecutor::runTest(const std::string& file)
 	TestParser parser(file);
 
 	if (!parser.isOk()) {
+		std::cout << "[Skipping] " << file << std::endl;
 		return;
 	}
 
 	executeTest(parser);
 
 	if (m_output.str().compare(parser.getExpect()) == 0) {
+		std::cout << "[Passed] " << file << std::endl;
 		m_passes.push_back(file);
 	} else {
+		std::cout << "[Failed] " << file << std::endl;
 		m_fails.push_back(file);
+		system(("diff -uwp " + m_out_file + " " + m_exp_file).c_str());
 	}
 }
 
